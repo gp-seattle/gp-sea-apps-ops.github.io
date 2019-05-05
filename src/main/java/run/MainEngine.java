@@ -33,7 +33,7 @@ public class MainEngine {
             // Show status
             System.out.println("ENGINE STATUS " + htmlOutput);
             // Output html file
-            BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/webapp/output/index.html"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("index.html"));
             bw.write(htmlOutput);
             bw.close();
         } catch (Exception e) {
