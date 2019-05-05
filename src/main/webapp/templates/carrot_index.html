@@ -2,13 +2,15 @@
 <html>
 <head>
   <style>
+      <!-- padding, margin, flexbox -->
     body {background-color: powderblue;}
-    h1   {color: blue;}
+    h1   {color: cyan; font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;}
+    .name {font-size: 24px}
     p    {color: red;}
   </style>
 </head>
-    <h1>Hello, {% echo name1 %}</h1>
-    <h1>Hello, {% echo name2 %}</h1>
+    <h1 class=name>Hello, {% echo name1 %}</h1>
+    <h1 class=name>Hello, {% echo name2 %}</h1>
     <h1>Hello, {% echo day1 %}</h1>
     <h1>Hello, {% echo day2 %}</h1>
 </html>
