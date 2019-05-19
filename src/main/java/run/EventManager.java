@@ -5,11 +5,11 @@ public class EventManager {
       
       Map<String, Map<String, String>> Events = new HashMap<>();
    
-   /*
+   
       //TODO: figure out how to get the proper filepath
       File f = new File("calendar_data.csv");
-   
-         in.nextLine();
+      Scanner in = new Scanner(f);
+      in.nextLine();
       int i = 0;
       while(in.hasNext()) {
          Map<String, String> h = new HashMap<>();
@@ -31,7 +31,7 @@ public class EventManager {
          System.out.println(h1);
          
       }
-      */
+   
       
       System.out.println(countDays(20190101));
       
@@ -47,30 +47,31 @@ public class EventManager {
       int month = (value / 100) % 100;
       int year = (value / 10000);
          
-      Date d = new Date(year, month, day);
+      Date d = new Date(year - 1900, month - 1, day);
          
       Calendar c = Calendar.getInstance();
       c.setTime(d);
       int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
          
+      System.out.println(d);
+         
       switch (dayOfWeek) {
-         case 0:
-            return "Tuesday";
          case 1:
-            return "Wednesday";
-         case 2:
-            return "Thursday";
-         case 3:
-            return "Friday";
-         case 4:
-            return "Satday";
-         case 5:
             return "Sunday";
-         case 6:
+         case 2:
             return "Monday";
+         case 3:
+            return "Tuesday";
+         case 4:
+            return "Wednesday";
+         case 5:
+            return "Thursday";
+         case 6:
+            return "Friday";
+         case 7:
+            return "Satday";
       }
-      return "Err";
-      
+      return("ERROR SEE WYATT");
    }
 }    
       
