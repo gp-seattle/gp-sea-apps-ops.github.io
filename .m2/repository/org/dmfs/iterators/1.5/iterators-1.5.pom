@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.dmfs</groupId>
+  <artifactId>iterators</artifactId>
+  <version>1.5</version>
+  <name>iterators</name>
+  <description>A collection of Iterator implementations.</description>
+  <url>https://github.com/dmfs/iterators</url>
+  <scm>
+    <url>git@github.com:dmfs/iterators.git</url>
+    <connection>scm:git:git@github.com:dmfs/iterators.git</connection>
+    <developerConnection>scm:git:git@github.com:dmfs/iterators.git</developerConnection>
+  </scm>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/license/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>dmfs</id>
+      <name>Marten Gajda</name>
+      <email>marten@dmfs.org</email>
+      <organization>dmfs GmbH</organization>
+      <organizationUrl>https://dmfs.org</organizationUrl>
+    </developer>
+  </developers>
+</project>
