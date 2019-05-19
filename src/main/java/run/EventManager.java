@@ -5,7 +5,7 @@ public class EventManager {
       
       Map<String, Map<String, String>> Events = new HashMap<>();
    
-      File f = new File("calendar_data.csv");
+      File f = new File("../../../../../gp-sea-apps-ops.github.io/data/calendar_data.csv");
       Scanner in = new Scanner(f);
       in.nextLine();
       int i = 0;
@@ -29,6 +29,8 @@ public class EventManager {
          System.out.println(h1);
          
       }
+   }   
+   }
       
       
       
@@ -47,8 +49,7 @@ public class EventManager {
       
       
       
-      
-      
+/*      
       //  1/1/2019 = tuesday   (0)
       //pre:  takes in an int in the yyyymmdd form
       //post: returns the day of the week that that is on
@@ -122,4 +123,4 @@ public class EventManager {
       }
       */
    
-}
+
