@@ -12,8 +12,10 @@ public class EventMap {
    //         -data
    //            -make an calander title for the front end to use
    //            -list number of events at each index
-   //      -implement getDayOfWeek
+   //      -further testing of getFirstAndLastDay method
    //      -implement method to send data off to front end
+   //      -look into removing the getDayOfWeekMethod by using Calendars
+   //      -further testing isBetween method for end and start of year
    
    
    
@@ -30,11 +32,17 @@ public class EventMap {
       //map to hold all the events in an easily manipulated manner
       try {
          Map<String, Map<String, String>> events = new HashMap<>();
+         
+         //sets up file input
          File f = new File("../../../../../gp-sea-apps-ops.github.io/data/calendar_data.csv");
          Scanner in = new Scanner(f);
+         //skips format line
          in.nextLine();
+         
+         //puts events into the hashmap with the key "Event" + i
          int i = 0;
          while(in.hasNext()) {
+            //creates the inner hashmap
             Map<String, String> h = new HashMap<>();
             String[] temp = in.nextLine().split(",");
          
@@ -51,14 +59,23 @@ public class EventMap {
             i++;
          } 
          
+         System.out.println(isBetween(getFirstAndLastDay(), 20190609));
+         
+         
+         
+         /*
+         //tests the getEventCount method
          System.out.println(getEventCount("20190505", events));
-         /* 
+         
+         //Prints the events out
          for (String s : events.keySet()) {
             System.out.println(s + " = " + events.get(s));
          
          }
          */
+         
       } catch(FileNotFoundException e) {
+         //filepath is wrong or calander data does not exist
          System.out.println("Error: Calander data not found");
       }
    }
@@ -79,9 +96,52 @@ public class EventMap {
    }
    
    //pre:  takes an int date. date must be in form yyyymmdd
-      //post: returns an int from 1-7 with 1 being Sunday and 7 being Saturday
+   //post: returns an int from 0-6 with 0 being Sunday and 6 being Saturday
    public static int getDayOfWeek(int date) {
-      return -1;
+      return makeDate(date).getDay();
+   }
+   
+   //post: returns an array of size 2 with the first element being the first 
+   //      Sunday on or before the current date and the last being the Saturday
+   //      3 weeks after the Sunday. Both are in yyyymmdd format
+   public static int[] getFirstAndLastDay() {
+      int[] firstLast = new int[2];
+      Calendar c = new GregorianCalendar();
+      
+      //YEAR = 1, MONTH = 2, WEEK_OF_YEAR = 3, DATE = 5, DAY_OF_WEEK = 7
+      
+      //gets Sunday directly before date
+      c.add(5, - c.get(7) + 1);
+      firstLast[0] = c.get(1) * 10000 + (c.get(2) + 1) * 100 + c.get(5);
+      
+      //gets last Saturday to display
+      c.add(5, 20);
+      firstLast[1] = c.get(1) * 10000 + (c.get(2) + 1) * 100 + c.get(5);
+      
+      return firstLast;
+   }
+   
+   //pre:  takes in an int date in the format yyyymmdd and an int array
+   //      firstLast with the first element being the first date that date
+   //      can be on and the second element being the last date that date
+   //      can be on. Both elements must be in yyyymmdd format
+   //post: returns true if date is on or between the dates in firstLast
+   public static boolean isBetween(int[] firstLast, int date) {
+      Date d = makeDate(date);
+      Date first = makeDate(firstLast[0]);
+      Date last = makeDate(firstLast[1]);
+      
+      return (d.compareTo(first) >= 0 && d.compareTo(last) <= 0);
+   }
+   
+   //pre:  takes an int date in the yyyymmdd format
+   //post: returns a Date object
+   public static Date makeDate(int date) {
+      int day = date % 100;
+      int month = (date / 100) % 100;
+      int year = (date / 10000);
+      
+      return new Date(year - 1900, month - 1, day);
    }
    
 }
