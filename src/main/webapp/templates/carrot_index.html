@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      <!-- Input CSS Formatting Here! -->
+      <!-- Possible tools we need to learn: padding, margin, flexbox -->
+      body {
+        background-color:
+        powderblue;
+      }
+      h1   {
+        color: #CD6155;
+        font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+      }
+      .name {
+        font-size: 24px
+      }
+      p    {
+        color: red;
+      }
+      .column {
+        float: left;
+        width: 50%;
+      }
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Main Website -->
+    <div class="row">
+      <div class="column">
+        <h1 class=name>Hello, {% echo name1 %}</h1>
+        <h1 class=name>Hello, {% echo name2 %}</h1>
+      </div>
+      <div class="column">
+        <h1>Hello, {% echo day1 %}</h1>
+        <h1>Hello, {% echo day2 %}</h1>
+      </div>
+    </div> 
+  </body> 
+</html>
