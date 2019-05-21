@@ -1,21 +1,28 @@
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;  
+import java.util.Map;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class EventMap {
    
    //TODO: -main
    //         -events
-   //            -include only three weeks worth of events
    //            -index the events into the proper boxes based on day that the 
    //             code is ran
    //         -data
    //            -make an calander title for the front end to use
-   //            -list number of events at each index
+   //               -create the getTitle method (see line 95)
    //      -further testing of getFirstAndLastDay method
    //      -implement method to send data off to front end
    //      -look into removing the getDayOfWeekMethod by using Calendars
    //      -further testing isBetween method for end and start of year
+   //      
    
    
    
@@ -24,13 +31,18 @@ public class EventMap {
    //post: pulls data from the .csv file and puts it into a hashmap as well as
    //      putting other important info into the hashmap
    public static void main(String[] args) {
-   
+      
       //map we can send to front end
       //21 keys: 0-20 and "data"
       Map<String, Object> info = new HashMap<>();
       
       //map to hold all the events in an easily manipulated manner
       try {
+      
+                 //gets first and last date to display
+         int[] firstLast = getFirstAndLastDay();
+         Date first = makeDate(firstLast[0]);
+         
          Map<String, Map<String, String>> events = new HashMap<>();
          
          //sets up file input
@@ -45,21 +57,45 @@ public class EventMap {
             //creates the inner hashmap
             Map<String, String> h = new HashMap<>();
             String[] temp = in.nextLine().split(",");
-         
-            h.put("date", temp[0]);
-            h.put("startTime", temp[1]);
-            h.put("endTime", temp[2]);
-            h.put("name", temp[3]);
-            h.put("location", temp[4]);
-            h.put("group_gp", temp[5]);
-         
-            events.put("Event" + i, h);
             
+            //sorts out the events out of range of the acceptable timeframe
+            long milliesBetween = makeDate(temp[0]).getTime() - first.getTime();
+            long daysBetween =  TimeUnit.DAYS.convert(milliesBetween, TimeUnit.MILLISECONDS);
          
-            i++;
+            if (daysBetween < 20 && daysBetween >= 0) {
+               h.put("date", temp[0]);
+               h.put("startTime", temp[1]);
+               h.put("endTime", temp[2]);
+               h.put("name", temp[3]);
+               h.put("location", temp[4]);
+               h.put("group_gp", temp[5]);
+               //days between this event and the first Sunday
+               h.put("daysBetween", String.valueOf(daysBetween));
+            
+               events.put("Event" + i, h);
+            
+               i++;
+            }
          } 
          
-         System.out.println(isBetween(getFirstAndLastDay(), 20190609));
+         //creates "data" for all additional information
+         Map<String, Object> data = new HashMap<>();
+         
+         //maps box index to number of events
+         for (int j = 0; j < 21; j++) {
+            int count = 0;
+            for (Map<String, String> event : events.values()) {
+               if (event.get("daysBetween").equals(String.valueOf(j))) {
+                  count++;  
+               }
+            }
+            data.put(String.valueOf(j), String.valueOf(count));
+         }
+         
+         data.put("title", getTitle());
+         
+         info.put("data", data);
+         
          
          
          
@@ -144,4 +180,13 @@ public class EventMap {
       return new Date(year - 1900, month - 1, day);
    }
    
+   public static Date makeDate(String date) {
+      return makeDate(Integer.valueOf(date));
+   }
+   
+   //pre:  
+   //post: returns a String of the apporpriate title for the calendar
+   public static String getTitle() {
+      return null;
+   }
 }
