@@ -1,0 +1,26 @@
+
+h1 {
+  text-align: center;
+  color: white;
+  font-family: 'opensans', sans-serif;
+  background-color: lightblue;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+}
+ #calendar th{
+  padding: 8px;
+  background-color: grey;
+  border-style: black solid 2px;
+
+}
+.day {
+  background-color: grey;
+  border-style: black solid 2px;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  width: 200px;
+  text-align: center;
+  color: white;
+  font-family:'opensans', sans-serif;
+
+}
