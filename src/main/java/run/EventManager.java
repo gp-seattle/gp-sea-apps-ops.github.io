@@ -5,7 +5,13 @@ public class EventManager {
       
       Map<String, Map<String, String>> Events = new HashMap<>();
    
+<<<<<<< .merge_file_a09680
       File f = new File("../../../../../gp-sea-apps-ops.github.io/data/calendar_data.csv");
+=======
+   
+      //TODO: figure out how to get the proper filepath
+      File f = new File("calendar_data.csv");
+>>>>>>> .merge_file_a06076
       Scanner in = new Scanner(f);
       in.nextLine();
       int i = 0;
@@ -29,78 +35,54 @@ public class EventManager {
          System.out.println(h1);
          
       }
+<<<<<<< .merge_file_a09680
    }   
    }
+=======
+   
+>>>>>>> .merge_file_a06076
       
+      System.out.println(countDays(20190101));
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+   }
       
 /*      
       //  1/1/2019 = tuesday   (0)
       //pre:  takes in an int in the yyyymmdd form
       //post: returns the day of the week that that is on
-         public String countDays(int value) {
-         int day = value % 100;
-         int month = (value / 100) % 100;
-         int year = (value / 10000);
+   public static String countDays(int value) {
+      int day = value % 100;
+      int month = (value / 100) % 100;
+      int year = (value / 10000);
          
-         long noOfDaysBetween = DAYS.between(startDate, endDate);
+      Date d = new Date(year - 1900, month - 1, day);
          
-         switch (rem) {
-            case 0:
-               return "Tuesday";
-            case 1:
-               return "Wednesday";
-           case 2:
-               return "Thursday";
-            case 3:
-               return "Friday";
-            case 4:
-               return "Satday";
-            case 5:
-               return "Sunday";
-            case 6:
-               return "Monday";
-         }
-      
+      Calendar c = Calendar.getInstance();
+      c.setTime(d);
+      int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+         
+      System.out.println(d);
+         
+      switch (dayOfWeek) {
+         case 1:
+            return "Sunday";
+         case 2:
+            return "Monday";
+         case 3:
+            return "Tuesday";
+         case 4:
+            return "Wednesday";
+         case 5:
+            return "Thursday";
+         case 6:
+            return "Friday";
+         case 7:
+            return "Satday";
       }
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+      return("ERROR SEE WYATT");
    }
+}    
+      
    
    /*
    public static class Event implements Comparable<Event>{
@@ -122,5 +104,8 @@ public class EventManager {
          group_GP = Integer.parseInt(input[5]);
       }
       */
+<<<<<<< .merge_file_a09680
    
 
+=======
+>>>>>>> .merge_file_a06076
