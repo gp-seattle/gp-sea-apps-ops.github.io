@@ -12,16 +12,14 @@ import java.util.concurrent.TimeUnit;
 public class EventMap {
    
    //TODO: -main
-   //         -remove extra HashMap
-   //         -events
-   //            -index the events into the proper boxes based on day that the 
-   //             code is ran
    //         -data
    //            -make an calander title for the front end to use
-   //               -create the getTitle method (see line 95)
+   //               -create the getTitle method
    //      -further testing of getFirstAndLastDay method
    //      -implement method to send data off to front end
    //      -look into removing the getDayOfWeekMethod by using Calendars
+   //      -look into removing the getEventCount method
+   //      -look into removing the isBetween method 
    //      -further testing isBetween method for end and start of year
    //      
    //WARNINGS:
@@ -107,6 +105,7 @@ public class EventMap {
          System.out.println("Error: Calander data not found");
       }
    }
+   
    
    
    //pre:  takes an String date and a Map of String to Map of String to String.
