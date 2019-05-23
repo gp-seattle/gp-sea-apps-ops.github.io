@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class EventMap {
    
    //TODO: -main
+   //         -remove extra HashMap
    //         -events
    //            -index the events into the proper boxes based on day that the 
    //             code is ran
@@ -23,7 +24,8 @@ public class EventMap {
    //      -look into removing the getDayOfWeekMethod by using Calendars
    //      -further testing isBetween method for end and start of year
    //      
-   
+   //WARNINGS:
+   //      -Uncheked cast line 82
    
    
    
@@ -39,76 +41,66 @@ public class EventMap {
       //map to hold all the events in an easily manipulated manner
       try {
       
-                 //gets first and last date to display
+         //gets first and last date to display
          int[] firstLast = getFirstAndLastDay();
          Date first = makeDate(firstLast[0]);
-         
-         Map<String, Map<String, String>> events = new HashMap<>();
-         
+                     
          //sets up file input
          File f = new File("../../../../../gp-sea-apps-ops.github.io/data/calendar_data.csv");
          Scanner in = new Scanner(f);
          //skips format line
          in.nextLine();
+        
+          //creates "data" for all additional information
+         Map<String, Object> data = new HashMap<>();
          
-         //puts events into the hashmap with the key "Event" + i
-         int i = 0;
+         for (int i = 0; i < 21; i++) {
+            //creates data indices
+            data.put(String.valueOf(i), 0);
+            //creates info indices
+            info.put(String.valueOf(i), new HashMap<String, Map<String, String>>());
+         }
+      
          while(in.hasNext()) {
-            //creates the inner hashmap
-            Map<String, String> h = new HashMap<>();
+            //creates a HashMap for an individual event
+            Map<String, String> event = new HashMap<>();
             String[] temp = in.nextLine().split(",");
             
             //sorts out the events out of range of the acceptable timeframe
             long milliesBetween = makeDate(temp[0]).getTime() - first.getTime();
             long daysBetween =  TimeUnit.DAYS.convert(milliesBetween, TimeUnit.MILLISECONDS);
          
-            if (daysBetween < 20 && daysBetween >= 0) {
-               h.put("date", temp[0]);
-               h.put("startTime", temp[1]);
-               h.put("endTime", temp[2]);
-               h.put("name", temp[3]);
-               h.put("location", temp[4]);
-               h.put("group_gp", temp[5]);
-               //days between this event and the first Sunday
-               h.put("daysBetween", String.valueOf(daysBetween));
-            
-               events.put("Event" + i, h);
-            
-               i++;
+            if (daysBetween <= 20 && daysBetween >= 0) {
+               event.put("date", temp[0]);
+               event.put("startTime", temp[1]);
+               event.put("endTime", temp[2]);
+               event.put("name", temp[3]);
+               event.put("location", temp[4]);
+               event.put("group_gp", temp[5]);
+               
+               //puts the event into the proper index in info
+               Map<String, Map<String, String>> events = (Map<String, Map<String, String>>)info.get(String.valueOf(daysBetween));
+               events.put(String.valueOf(events.size()), event);
+              
+               //gets the number of events on the day
+               int currEventCount = (int)data.get(String.valueOf(daysBetween));
+               data.put(String.valueOf(daysBetween), currEventCount + 1);
             }
-         } 
-         
-         //creates "data" for all additional information
-         Map<String, Object> data = new HashMap<>();
-         
-         //maps box index to number of events
-         for (int j = 0; j < 21; j++) {
-            int count = 0;
-            for (Map<String, String> event : events.values()) {
-               if (event.get("daysBetween").equals(String.valueOf(j))) {
-                  count++;  
-               }
-            }
-            data.put(String.valueOf(j), String.valueOf(count));
+            
          }
+      
+         /********************************************\
+         *                                            *
+         *                                            *
+         *     EXTRA INFO IS PUT INTO DATA HERE       *
+         *                                            *
+         *                                            *
+         \*******************************************/
          
          data.put("title", getTitle());
          
          info.put("data", data);
          
-         
-         
-         
-         /*
-         //tests the getEventCount method
-         System.out.println(getEventCount("20190505", events));
-         
-         //Prints the events out
-         for (String s : events.keySet()) {
-            System.out.println(s + " = " + events.get(s));
-         
-         }
-         */
          
       } catch(FileNotFoundException e) {
          //filepath is wrong or calander data does not exist
