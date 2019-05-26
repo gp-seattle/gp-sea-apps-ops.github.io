@@ -3,10 +3,12 @@ A2F Apps Ops Spring Quarter 2019.
 
 This is a Test. Test test.
 Brian
-Please enter your name: 
+Please enter your name:
 Lauren
+Evan
 
 Wyatt
+
 
 
 ## Compiling Instructions!!
@@ -23,3 +25,4 @@ export PATH=/c/Users/wyatt/Desktop/Dev/A2f\ Ops/gp-sea-apps-ops.github.io/apache
 4. Run the following commands to comiple and execute!
 mvn compile
 mvn exec:java
+

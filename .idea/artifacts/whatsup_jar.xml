@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="whatsup:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/whatsup_jar</output-path>
+    <root id="archive" name="whatsup.jar">
+      <element id="module-output" name="whatsup" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/findbugs/jsr305/3.0.1/jsr305-3.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/jstl/jstl/1.2/jstl-1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/dmfs/iterators/1.5/iterators-1.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/au/com/codeka/carrot/2.4.2/carrot-2.4.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

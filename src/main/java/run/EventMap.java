@@ -10,83 +10,30 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class EventMap {
-   
-   //TODO: -main
-   //         -data
-   //            -make an calander title for the front end to use
-   //               -create the getTitle method
-   //      -further testing of getFirstAndLastDay method
-   //      -implement method to send data off to front end
-   //      -look into removing the getDayOfWeekMethod by using Calendars
-   //      -look into removing the getEventCount method
-   //      -look into removing the isBetween method 
-   //      -further testing isBetween method for end and start of year
-   //      
-   //WARNINGS:
-   //      -Uncheked cast line 82
+public class EventMap {  
    
    
+   //Map to send out to front end
+   public HashMap<String, Object> data;
+   private Map<String, Object> info;
+   private Date first;
+   private Date last;
    
-
-   //post: pulls data from the .csv file and puts it into a hashmap as well as
-   //      putting other important info into the hashmap
-   public static void main(String[] args) {
+   //pre: 
+   //post: creates an EventMap object
+   public EventMap() throws FileNotFoundException {
+   
+      data = new HashMap<>();
+      info = new HashMap<>();
+      int[] firstLast = getFirstAndLastDay();
       
-      //map we can send to front end
-      //21 keys: 0-20 and "data"
-      Map<String, Object> info = new HashMap<>();
+      //sets the first and last day
+      first = makeDate(firstLast[0]);
+      last = makeDate(firstLast[1]);
       
-      //map to hold all the events in an easily manipulated manner
-      try {
+      data.put("info", info);
+      fillInfo();
       
-         //gets first and last date to display
-         int[] firstLast = getFirstAndLastDay();
-         Date first = makeDate(firstLast[0]);
-                     
-         //sets up file input
-         File f = new File("../../../../../gp-sea-apps-ops.github.io/data/calendar_data.csv");
-         Scanner in = new Scanner(f);
-         //skips format line
-         in.nextLine();
-        
-          //creates "data" for all additional information
-         Map<String, Object> data = new HashMap<>();
-         
-         for (int i = 0; i < 21; i++) {
-            //creates data indices
-            data.put(String.valueOf(i), 0);
-            //creates info indices
-            info.put(String.valueOf(i), new HashMap<String, Map<String, String>>());
-         }
-      
-         while(in.hasNext()) {
-            //creates a HashMap for an individual event
-            Map<String, String> event = new HashMap<>();
-            String[] temp = in.nextLine().split(",");
-            
-            //sorts out the events out of range of the acceptable timeframe
-            long milliesBetween = makeDate(temp[0]).getTime() - first.getTime();
-            long daysBetween =  TimeUnit.DAYS.convert(milliesBetween, TimeUnit.MILLISECONDS);
-         
-            if (daysBetween <= 20 && daysBetween >= 0) {
-               event.put("date", temp[0]);
-               event.put("startTime", temp[1]);
-               event.put("endTime", temp[2]);
-               event.put("name", temp[3]);
-               event.put("location", temp[4]);
-               event.put("group_gp", temp[5]);
-               
-               //puts the event into the proper index in info
-               Map<String, Map<String, String>> events = (Map<String, Map<String, String>>)info.get(String.valueOf(daysBetween));
-               events.put(String.valueOf(events.size()), event);
-              
-               //gets the number of events on the day
-               int currEventCount = (int)data.get(String.valueOf(daysBetween));
-               data.put(String.valueOf(daysBetween), currEventCount + 1);
-            }
-            
-         }
       
          /********************************************\
          *                                            *
@@ -94,33 +41,9 @@ public class EventMap {
          *     EXTRA INFO IS PUT INTO DATA HERE       *
          *                                            *
          *                                            *
-         \*******************************************/
-         
-         data.put("title", getTitle());
-         
-         info.put("data", data);
-         
-         
-      } catch(FileNotFoundException e) {
-         //filepath is wrong or calander data does not exist
-         System.out.println("Error: Calander data not found");
-      }
-   }
-   
-   
-   
-   //pre:  takes an String date and a Map of String to Map of String to String.
-   //      date must be in form yyyymmdd
-   //post: returns the number of events 
-   public static int getEventCount(String date, Map<String, Map<String, String>> events) {
-      int count = 0;
-      for(Map h : events.values()) {
-         if (h.get("date").equals(date)) {
-            count++;
-         }
-      }
+         \********************************************/
       
-      return count;
+      data.put("title", getTitle());
    }
    
    //pre:  takes an int date. date must be in form yyyymmdd
@@ -129,10 +52,51 @@ public class EventMap {
       return makeDate(date).getDay();
    }
    
+   public void fillInfo() throws FileNotFoundException {
+      //sets up file input
+      File f = new File("../../../../../gp-sea-apps-ops.github.io/data/calendar_data.csv");
+      Scanner in = new Scanner(f);
+      //skips format line
+      in.nextLine();
+        
+      //creates "data" for all additional information
+      Map<String, Object> data = new HashMap<>();
+         
+      for (int i = 0; i < 21; i++) {
+         //creates info indices
+         info.put(String.valueOf(i), new HashMap<String, Map<String, String>>());
+      }
+      
+      while(in.hasNext()) {
+            //creates a HashMap for an individual event
+         Map<String, String> event = new HashMap<>();
+         String[] temp = in.nextLine().split(",");
+            
+         //sorts out the events out of range of the acceptable timeframe
+         long milliesBetween = makeDate(temp[0]).getTime() - first.getTime();
+         long daysBetween =  TimeUnit.DAYS.convert(milliesBetween, TimeUnit.MILLISECONDS);
+         
+         if (daysBetween <= 20 && daysBetween >= 0) {
+            event.put("date", temp[0]);
+            event.put("startTime", temp[1]);
+            event.put("endTime", temp[2]);
+            event.put("name", temp[3]);
+            event.put("location", temp[4]);
+            event.put("group_gp", temp[5]);
+               
+            //puts the event into the proper index in info
+            Map<String, Map<String, String>> events = (Map<String, Map<String, String>>)info.get(String.valueOf(daysBetween));
+            events.put(String.valueOf(events.size()), event);                 
+         }
+            
+      }
+            
+   }
+      
    //post: returns an array of size 2 with the first element being the first 
    //      Sunday on or before the current date and the last being the Saturday
    //      3 weeks after the Sunday. Both are in yyyymmdd format
-   public static int[] getFirstAndLastDay() {
+   public int[] getFirstAndLastDay() {
       int[] firstLast = new int[2];
       Calendar c = new GregorianCalendar();
       
@@ -149,22 +113,9 @@ public class EventMap {
       return firstLast;
    }
    
-   //pre:  takes in an int date in the format yyyymmdd and an int array
-   //      firstLast with the first element being the first date that date
-   //      can be on and the second element being the last date that date
-   //      can be on. Both elements must be in yyyymmdd format
-   //post: returns true if date is on or between the dates in firstLast
-   public static boolean isBetween(int[] firstLast, int date) {
-      Date d = makeDate(date);
-      Date first = makeDate(firstLast[0]);
-      Date last = makeDate(firstLast[1]);
-      
-      return (d.compareTo(first) >= 0 && d.compareTo(last) <= 0);
-   }
-   
    //pre:  takes an int date in the yyyymmdd format
    //post: returns a Date object
-   public static Date makeDate(int date) {
+   public Date makeDate(int date) {
       int day = date % 100;
       int month = (date / 100) % 100;
       int year = (date / 10000);
@@ -172,13 +123,15 @@ public class EventMap {
       return new Date(year - 1900, month - 1, day);
    }
    
-   public static Date makeDate(String date) {
+
+   public Date makeDate(String date) {
       return makeDate(Integer.valueOf(date));
    }
    
    //pre:  
    //post: returns a String of the apporpriate title for the calendar
-   public static String getTitle() {
+
+   public String getTitle() {
       return null;
    }
 }

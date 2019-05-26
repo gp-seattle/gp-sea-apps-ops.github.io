@@ -1,12 +1,14 @@
 package run;
-/*
+
 import au.com.codeka.carrot.Bindings;
 import au.com.codeka.carrot.CarrotEngine;
 import au.com.codeka.carrot.CarrotException;
 import au.com.codeka.carrot.Configuration;
 import au.com.codeka.carrot.bindings.MapBindings;
 import au.com.codeka.carrot.resource.FileResourceLocator;
-*/
+
+
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -30,11 +32,13 @@ public class MainEngine {
       Bindings bindings = new MapBindings(values);
    
       outputHTML(engine, bindings, "index.html");
+      
    }
 
    private static HashMap<String, Object> assignBindings() {
-      HashMap<String, Object> values = new HashMap<String, Object>();
-      
+     
+      EventMap e = new EventMap();
+      HashMap<String, Object> values = e.data;
       /*
       values.put("name1", "Jim");
       values.put("name2", "Jen");
