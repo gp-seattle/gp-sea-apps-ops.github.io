@@ -1,4 +1,4 @@
-
+package run;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Calendar;
@@ -9,16 +9,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class EventMap {
-   
-   //TODO:
-   //      -make an calander title for the front end to use
-   //      -further testing of getFirstAndLastDay method
-   //      -further testing isBetween method for end and start of year
-   //      
-   //WARNINGS:
-   //      -Uncheked cast
-   
+public class EventMap {  
    
    
    //Map to send out to front end
@@ -27,12 +18,10 @@ public class EventMap {
    private Date first;
    private Date last;
    
-   
-   //COMMENT
-   //ME
-   //PLEASE
-   
-  
+
+
+   //pre: 
+   //post: creates an EventMap object
    public EventMap() throws FileNotFoundException {
    
       data = new HashMap<>();
