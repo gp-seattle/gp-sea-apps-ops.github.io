@@ -18,6 +18,8 @@ public class EventMap {
    private Date first;
    private Date last;
    
+
+
    //pre: 
    //post: creates an EventMap object
    public EventMap() throws FileNotFoundException {
@@ -124,6 +126,8 @@ public class EventMap {
    //pre:  
    //post: returns a String of the apporpriate title for the calendar
    public String getTitle() {
-      return null;
+      String result = (first.getMonth() + 1) + "/" + first.getDate() +
+                      " - " + (last.getMonth() + 1) + "/" + last.getDate();
+      return result;
    }
 }
