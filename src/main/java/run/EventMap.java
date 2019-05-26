@@ -1,4 +1,5 @@
 package run;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Calendar;
@@ -47,6 +48,11 @@ public class EventMap {
       data.put("title", getTitle());
    }
    
+   //pre:  takes an int date. date must be in form yyyymmdd
+   //post: returns an int from 0-6 with 0 being Sunday and 6 being Saturday
+   public static int getDayOfWeek(int date) {
+      return makeDate(date).getDay();
+   }
    
    public void fillInfo() throws FileNotFoundException {
       //sets up file input
@@ -119,12 +125,14 @@ public class EventMap {
       return new Date(year - 1900, month - 1, day);
    }
    
+
    public Date makeDate(String date) {
       return makeDate(Integer.valueOf(date));
    }
    
    //pre:  
    //post: returns a String of the apporpriate title for the calendar
+
    public String getTitle() {
       String result = (first.getMonth() + 1) + "/" + first.getDate() +
                       " - " + (last.getMonth() + 1) + "/" + last.getDate();
