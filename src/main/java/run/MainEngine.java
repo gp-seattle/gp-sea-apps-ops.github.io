@@ -8,12 +8,14 @@ import au.com.codeka.carrot.bindings.MapBindings;
 import au.com.codeka.carrot.resource.FileResourceLocator;
 
 
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+
 
 public class MainEngine {
 
@@ -43,7 +45,8 @@ public class MainEngine {
       values.put("day1", "8/18/2019");
       values.put("day2", "8/20/2019");
       */
-      return values;
+      EventMap e = new EventMap();
+      return e.data;
    }
 
    private static void outputHTML(CarrotEngine engine, Bindings bindings, String outputLocation) {
